@@ -2,28 +2,32 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 
 export default function MyBookings() {
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState(null); // null first
 
   useEffect(() => {
-    const loadBookings = () => {
-      const stored = localStorage.getItem("bookings");
+    const load = () => {
+      const data = localStorage.getItem("bookings");
 
-      if (stored) {
-        setBookings(JSON.parse(stored));
+      if (data) {
+        setBookings(JSON.parse(data));
       } else {
         setBookings([]);
       }
     };
 
-    loadBookings();
+    load();
 
-    // 👇 Important: listen for storage changes
-    window.addEventListener("storage", loadBookings);
+    window.addEventListener("storage", load);
 
     return () => {
-      window.removeEventListener("storage", loadBookings);
+      window.removeEventListener("storage", load);
     };
   }, []);
+
+  // Block render until loaded
+  if (bookings === null) {
+    return null;
+  }
 
   return (
     <>
@@ -31,22 +35,18 @@ export default function MyBookings() {
 
       <div className="container">
 
-        {/* REQUIRED h1 */}
+        {/* REQUIRED */}
         <h1>My Bookings</h1>
 
-        {bookings.length === 0 && (
-          <p>No bookings yet</p>
-        )}
+        {bookings.map((b, i) => (
+          <div key={i} className="booking-card">
 
-        {bookings.map((booking, index) => (
-          <div key={index} className="booking-card">
+            {/* REQUIRED */}
+            <h3>{b.name}</h3>
 
-            {/* REQUIRED h3 */}
-            <h3>{booking.name}</h3>
-
-            <p>{booking.city}, {booking.state}</p>
-            <p>{booking.date}</p>
-            <p>{booking.time}</p>
+            <p>{b.city}, {b.state}</p>
+            <p>{b.date}</p>
+            <p>{b.time}</p>
 
           </div>
         ))}
