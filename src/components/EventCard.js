@@ -5,15 +5,18 @@ import "../styles.css";
 export default function EventCard({ event }) {
   const [open, setOpen] = useState(false);
 
+  
+  const eventName = event.name || event["Event Name"];
+
   return (
     <div className="event-card">
 
       {/* REQUIRED TAG */}
-      <h3>{event.name}</h3>
+      <h3>{eventName}</h3>
 
       <p>{event.address}</p>
       <p>{event.city}, {event.state}</p>
-      <p>⭐ {event.rating}</p>
+      <p>{event.rating}</p>
 
       {/* REQUIRED TEXT */}
       <button onClick={() => setOpen(true)}>
@@ -22,7 +25,7 @@ export default function EventCard({ event }) {
 
       {open && (
         <BookingModal
-          event={event}
+          event={{ ...event, name: eventName }} // pass fixed name
           close={() => setOpen(false)}
         />
       )}
