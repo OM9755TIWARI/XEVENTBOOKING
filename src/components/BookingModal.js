@@ -18,11 +18,10 @@ export default function BookingModal({ event, close }) {
       time,
     };
 
-    localStorage.setItem(
-      "bookings",
-      JSON.stringify([...old, booking])
-    );
-
+        localStorage.setItem(
+        "bookings",
+        JSON.stringify([...old, booking])
+        );
     close();
   };
 
