@@ -1,33 +1,9 @@
-import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 
 export default function MyBookings() {
-  const [bookings, setBookings] = useState(null); // null first
 
-  useEffect(() => {
-    const load = () => {
-      const data = localStorage.getItem("bookings");
-
-      if (data) {
-        setBookings(JSON.parse(data));
-      } else {
-        setBookings([]);
-      }
-    };
-
-    load();
-
-    window.addEventListener("storage", load);
-
-    return () => {
-      window.removeEventListener("storage", load);
-    };
-  }, []);
-
-  // Block render until loaded
-  if (bookings === null) {
-    return null;
-  }
+  const bookings =
+    JSON.parse(localStorage.getItem("bookings")) || [];
 
   return (
     <>
