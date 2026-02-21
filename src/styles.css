@@ -178,3 +178,44 @@ select {
     flex-direction: column;
   }
 }
+
+
+/* DROPDOWN */
+
+.dropdown {
+  position: relative;
+  min-width: 160px;
+}
+
+.dropdown button {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 20;
+  border-radius: 6px;
+}
+
+.dropdown-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background: var(--accent);
+  color: white;
+}

@@ -14,11 +14,19 @@ export default function SearchResults() {
 
   const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    getEvents(state, city).then((res) => {
+useEffect(() => {
+  const loadEvents = async () => {
+    try {
+      const res = await getEvents(state, city);
       setEvents(res.data);
-    });
-  }, [state, city]);
+    } catch {
+      console.log("Retrying events...");
+      setTimeout(loadEvents, 3000);
+    }
+  };
+
+  loadEvents();
+}, [state, city]);
 
   return (
     <>
