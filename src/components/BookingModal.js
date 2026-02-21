@@ -11,14 +11,13 @@ export default function BookingModal({ event, close }) {
     const old =
       JSON.parse(localStorage.getItem("bookings")) || [];
 
-    const booking = {
-      name: event.name,   
-      city: event.city,
-      state: event.state,
-      date,
-      time,
-    };
-
+  const booking = {
+    name: event.name || event["Event Name"],
+    city: event.city,
+    state: event.state,
+    date,
+    time,
+  };
     const updated = [...old, booking];
 
     // Force overwrite
