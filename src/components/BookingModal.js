@@ -5,27 +5,28 @@ export default function BookingModal({ event, close }) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
-  const saveBooking = () => {
-    if (!date || !time) return;
+ const saveBooking = () => {
+  if (!date || !time) return;
 
-    const old =
-      JSON.parse(localStorage.getItem("bookings")) || [];
+  const existing =
+    JSON.parse(localStorage.getItem("bookings")) || [];
+
+  const eventName = event.name || event["Event Name"];
 
   const booking = {
-    name: event.name || event["Event Name"],
+    name: eventName,
     city: event.city,
     state: event.state,
     date,
     time,
   };
-    const updated = [...old, booking];
 
-    // Force overwrite
-    localStorage.setItem("bookings", JSON.stringify(updated));
+  existing.push(booking);
 
-    // 🔥 Force hard reload (fixes Cypress timing)
-    window.location.href = "/my-bookings";
-  };
+  localStorage.setItem("bookings", JSON.stringify(existing));
+
+  close(); // Just close modal
+};
 
   return (
     <div className="modal">
