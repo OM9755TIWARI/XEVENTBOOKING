@@ -13,13 +13,14 @@ export default function BookingModal({ event, close }) {
 
   const eventName = event.name || event["Event Name"];
 
-  const booking = {
-    name: eventName,
-    city: event.city,
-    state: event.state,
-    date,
-    time,
-  };
+const booking = {
+  eventName: eventName, // add this
+  name: eventName,      // keep this
+  city: event.city,
+  state: event.state,
+  date,
+  time,
+};
 
   existing.push(booking);
 

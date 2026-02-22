@@ -5,10 +5,11 @@ export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    const data =
-      JSON.parse(localStorage.getItem("bookings")) || [];
+    const stored = localStorage.getItem("bookings");
 
-    setBookings(data);
+    if (stored) {
+      setBookings(JSON.parse(stored));
+    }
   }, []);
 
   return (
@@ -19,17 +20,24 @@ export default function MyBookings() {
 
         <h1>My Bookings</h1>
 
-        {bookings.map((b, i) => (
-          <div key={i} className="booking-card">
+        {bookings.map((b, i) => {
+          // SUPPORT BOTH FORMATS
+          const eventName = b.eventName || b.name;
 
-            <h3>{b.name}</h3>
+          return (
+            <div key={i} className="booking-card">
 
-            <p>{b.city}, {b.state}</p>
-            <p>{b.date}</p>
-            <p>{b.time}</p>
+              {/* REQUIRED */}
+              <h3>{eventName}</h3>
 
-          </div>
-        ))}
+              <p>{b.address}</p>
+              <p>{b.city}, {b.state}</p>
+              <p>{b.date}</p>
+              <p>{b.time}</p>
+
+            </div>
+          );
+        })}
 
       </div>
     </>
